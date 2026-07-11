@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>College Bus Tracker - Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body class="login-page">
+
+<div class="login-container">
+
+    <h1>
+        🚌 College Bus Tracker
+    </h1>
+
+    <p>
+        Login to Continue
+    </p>
+
+    <div class="login-box">
+
+        <label>
+            Select Role
+        </label>
+
+        <select id="role">
+
+            <option value="Admin">
+                Administrator
+            </option>
+
+            <option value="Driver">
+                Bus Driver
+            </option>
+
+            <option value="Student">
+                Student
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <label>
+            Username
+        </label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter Username">
+
+        <br><br>
+
+        <label>
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter Password">
+
+        <br><br>
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <br><br>
+
+        <div class="login-info">
+
+            <h3>Demo Credentials</h3>
+
+            <p><b>Admin</b> : admin / admin123</p>
+
+            <p><b>Driver</b> : driver / driver123</p>
+
+            <p><b>Student</b> : student / student123</p>
+
+        </div>
+
+    </div>
+        </div>
+
+</div>
+
+<script>
+
+function login() {
+
+    let role = document.getElementById("role").value;
+
+    let username = document.getElementById("username").value.trim();
+
+    let password = document.getElementById("password").value.trim();
+
+    // Admin Login
+    if (
+        role === "Admin" &&
+        username === "admin" &&
+        password === "admin123"
+    ) {
+
+        alert("Welcome Admin!");
+
+        window.location.href = "admin.html";
+
+    }
+
+    // Driver Login
+    else if (
+        role === "Driver" &&
+        username === "driver" &&
+        password === "driver123"
+    ) {
+
+        alert("Welcome Driver!");
+
+        window.location.href = "driver.html";
+
+    }
+
+    // Student Login
+    else if (
+        role === "Student" &&
+        username === "student" &&
+        password === "student123"
+    ) {
+
+        alert("Welcome Student!");
+
+        window.location.href = "student.html";
+
+    }
+
+    else {
+
+        alert("Invalid Username, Password or Role!");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Bus Tracker - Admin</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2><i class="fa-solid fa-bus"></i> Bus Tracker</h2>
+
+        <ul>
+            <li><i class="fa-solid fa-house"></i> Dashboard</li>
+            <li><i class="fa-solid fa-location-dot"></i> Live Tracking</li>
+            <li><i class="fa-solid fa-route"></i> Routes</li>
+            <li><i class="fa-solid fa-user-graduate"></i> Students</li>
+            <li><i class="fa-solid fa-bell"></i> Notifications</li>
+            <li><i class="fa-solid fa-gear"></i> Settings</li>
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Header -->
+        <header>
+
+            <h1>College Bus Tracker Dashboard</h1>
+
+            <div class="profile">
+
+                <span>👨‍💼 Admin</span>
+
+                <button onclick="location.href='login.html'">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard Cards -->
+
+        <section class="cards">
+
+            <div class="card">
+                <i class="fa-solid fa-bus"></i>
+                <h3>Active Buses</h3>
+                <p>5</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-user-group"></i>
+                <h3>Students</h3>
+                <p>320</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-circle-check"></i>
+                <h3>On Time</h3>
+                <p>4</p>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-clock"></i>
+                <h3>Delayed</h3>
+                <p>1</p>
+            </div>
+
+        </section>
+
+        <!-- Portal Buttons -->
+
+        <section class="portal-links">
+
+            <button onclick="location.href='driver.html'">
+                Driver Portal
+            </button>
+
+            <button onclick="location.href='student.html'">
+                Student Portal
+            </button>
+
+        </section>
+
+        <!-- Search -->
+
+        <section class="search">
+
+            <h2>Track College Bus</h2>
+
+            <select id="route">
+
+                <option value="">Select Route</option>
+
+                <option value="Ramakrishnanagar">Ramakrishnanagar</option>
+
+                <option value="Kuvempunagar">Kuvempunagar</option>
+
+                <option value="Saraswathipuram">Saraswathipuram</option>
+
+                <option value="TJ Layout">T.J. Layout</option>
+
+                <option value="Hebbal">Hebbal</option>
+
+            </select>
+
+            <button onclick="searchBus()">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Track Bus
+
+            </button>
+
+        </section>
+        <!-- Bus & Driver Section -->
+<section class="dashboard">
+
+    <!-- Bus Details -->
+    <div class="bus-card">
+
+        <h2><i class="fa-solid fa-bus"></i> Bus Details</h2>
+
+        <div id="result">
+
+            <p><strong>Bus No:</strong> --</p>
+            <p><strong>Route:</strong> --</p>
+            <p><strong>Current Location:</strong> --</p>
+            <p><strong>ETA:</strong> --</p>
+            <p><strong>Status:</strong> Waiting for Route Selection</p>
+
+        </div>
+
+    </div>
+
+    <!-- Driver Details -->
+    <div class="driver-card">
+
+        <h2><i class="fa-solid fa-id-card"></i> Driver Details</h2>
+
+        <img src="https://via.placeholder.com/120" alt="Driver">
+
+        <p><strong>Name:</strong> Ramesh Kumar</p>
+
+        <p><strong>Phone:</strong> +91 9876543210</p>
+
+        <p><strong>Experience:</strong> 8 Years</p>
+
+        <button onclick="alert('Driver Contacted Successfully!')">
+            Contact Driver
+        </button>
+
+    </div>
+
+</section>
+
+<!-- Live Map -->
+
+<section class="map">
+
+    <h2>
+        <i class="fa-solid fa-map-location-dot"></i>
+        Live Bus Location
+    </h2>
+
+    <iframe
+        src="https://maps.google.com/maps?q=Mysore&t=&z=12&ie=UTF8&iwloc=&output=embed"
+        allowfullscreen>
+    </iframe>
+
+</section>
+
+<!-- Notifications -->
+
+<section class="notifications">
+
+    <h2>
+        <i class="fa-solid fa-bell"></i>
+        Latest Notifications
+    </h2>
+
+    <ul>
+
+        <li>🚌 Ramakrishnanagar Bus reached college.</li>
+
+        <li>🚌 Hebbal Bus delayed by 5 minutes.</li>
+
+        <li>🚌 Kuvempunagar Bus started from pickup point.</li>
+
+        <li>🚌 Saraswathipuram Bus is on time.</li>
+
+    </ul>
+
+</section>
+<!-- ================= BUS MANAGEMENT ================= -->
+
+<section class="management">
+
+    <h2><i class="fa-solid fa-bus"></i> Bus Management</h2>
+
+    <button onclick="addBus()">+ Add New Bus</button>
+
+    <div id="busForm" style="display:none; margin-top:20px;">
+
+        <input type="text" id="busNo" placeholder="Bus Number">
+
+        <input type="text" id="busRoute" placeholder="Route">
+
+        <input type="text" id="driverName" placeholder="Driver Name">
+
+        <input type="text" id="busStatus" placeholder="Status">
+
+        <br><br>
+
+        <button onclick="saveBus()">Save Bus</button>
+
+    </div>
+
+    <table id="busTable">
+
+        <tr>
+            <th>Bus Number</th>
+            <th>Route</th>
+            <th>Driver</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        <tr>
+            <td>KA09 AB1234</td>
+            <td>Ramakrishnanagar</td>
+            <td>Ramesh Kumar</td>
+            <td>On Time</td>
+            <td>
+                <button onclick="editBus(this)">Edit</button>
+                <button onclick="deleteRow(this)">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>KA09 AB2345</td>
+            <td>Kuvempunagar</td>
+            <td>Suresh</td>
+            <td>Delayed</td>
+            <td>
+                <button onclick="editBus(this)">Edit</button>
+                <button onclick="deleteRow(this)">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>KA09 AB3456</td>
+            <td>Saraswathipuram</td>
+            <td>Mahesh</td>
+            <td>On Time</td>
+            <td>
+                <button onclick="editBus(this)">Edit</button>
+                <button onclick="deleteRow(this)">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>KA09 AB4567</td>
+            <td>T.J. Layout</td>
+            <td>Ravi</td>
+            <td>On Time</td>
+            <td>
+                <button onclick="editBus(this)">Edit</button>
+                <button onclick="deleteRow(this)">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>KA09 AB5678</td>
+            <td>Hebbal</td>
+            <td>Prakash</td>
+            <td>On Time</td>
+            <td>
+                <button onclick="editBus(this)">Edit</button>
+                <button onclick="deleteRow(this)">Delete</button>
+            </td>
+        </tr>
+
+    </table>
+
+</section>
+
+<!-- ================= DRIVER MANAGEMENT ================= -->
+
+<section class="management">
+
+    <h2><i class="fa-solid fa-id-card"></i> Driver Management</h2>
+
+    <table>
+
+        <tr>
+            <th>Driver</th>
+            <th>Phone</th>
+            <th>Assigned Bus</th>
+            <th>Status</th>
+        </tr>
+
+        <tr>
+            <td>Ramesh Kumar</td>
+            <td>9876543210</td>
+            <td>KA09 AB1234</td>
+            <td>Available</td>
+        </tr>
+
+        <tr>
+            <td>Suresh</td>
+            <td>9876543211</td>
+            <td>KA09 AB2345</td>
+            <td>Driving</td>
+        </tr>
+
+        <tr>
+            <td>Mahesh</td>
+            <td>9876543212</td>
+            <td>KA09 AB3456</td>
+            <td>Available</td>
+        </tr>
+
+    </table>
+
+</section>
+
+<!-- ================= STUDENT MANAGEMENT ================= -->
+
+<section class="management">
+
+    <h2><i class="fa-solid fa-user-graduate"></i> Student Management</h2>
+
+    <table>
+
+        <tr>
+            <th>USN</th>
+            <th>Name</th>
+            <th>Route</th>
+        </tr>
+
+        <tr>
+            <td>4VV23CS001</td>
+            <td>Chaithali Bhakta</td>
+            <td>Ramakrishnanagar</td>
+        </tr>
+
+        <tr>
+            <td>4VV23CS002</td>
+            <td>Rahul</td>
+            <td>Hebbal</td>
+        </tr>
+
+        <tr>
+            <td>4VV23CS003</td>
+            <td>Ananya</td>
+            <td>Kuvempunagar</td>
+        </tr>
+
+    </table>
+
+</section>
+
+<!-- ================= SEND NOTIFICATION ================= -->
+
+<section class="management">
+
+    <h2><i class="fa-solid fa-paper-plane"></i> Send Notification</h2>
+
+    <input type="text"
+           id="notification"
+           placeholder="Enter notification">
+
+    <button onclick="sendNotification()">
+        Send Notification
+    </button>
+
+</section>
+
+<!-- ================= REPORTS ================= -->
+
+<section class="management">
+
+    <h2><i class="fa-solid fa-chart-column"></i> Reports</h2>
+
+    <p>🚌 Total Trips Today : 5</p>
+
+    <p>👨‍🎓 Students Transported : 320</p>
+
+    <p>✅ On-Time Percentage : 80%</p>
+
+    <p>⏰ Delayed Trips : 1</p>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 College Bus Tracker |
+        Developed using HTML, CSS, JavaScript & Node.js
+    </p>
+
+</footer>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

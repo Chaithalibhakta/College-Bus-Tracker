@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>
+        <i class="fa-solid fa-bus"></i>
+        Driver Portal
+    </h2>
+
+    <ul>
+
+        <li><i class="fa-solid fa-house"></i> Dashboard</li>
+
+        <li><i class="fa-solid fa-location-dot"></i> Live Trip</li>
+
+        <li><i class="fa-solid fa-bus"></i> My Bus</li>
+
+        <li><i class="fa-solid fa-bell"></i> Notifications</li>
+
+    </ul>
+
+</div>
+
+
+<div class="main">
+
+<header>
+
+<h1>Driver Dashboard</h1>
+
+<div class="profile">
+
+<span>👨‍✈️ Driver</span>
+
+<button onclick="location.href='login.html'">
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<!-- Driver Cards -->
+
+<section class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-id-card"></i>
+
+<h3>Driver</h3>
+
+<p id="driverName">
+Ramesh Kumar
+</p>
+
+</div>
+
+
+<div class="card">
+
+<i class="fa-solid fa-bus"></i>
+
+<h3>Bus Number</h3>
+
+<p id="driverBus">
+KA09 AB1234
+</p>
+
+</div>
+
+
+<div class="card">
+
+<i class="fa-solid fa-route"></i>
+
+<h3>Route</h3>
+
+<p id="driverRouteText">
+Ramakrishnanagar
+</p>
+
+</div>
+
+
+<div class="card">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>Status</h3>
+
+<p id="tripStatus">
+Waiting
+</p>
+
+</div>
+
+</section>
+
+
+<!-- Bus Selection -->
+
+<section class="management">
+
+<h2>
+
+<i class="fa-solid fa-route"></i>
+
+Select Bus Route
+
+</h2>
+
+<select id="driverRoute" onchange="changeBus()">
+
+<option value="Ramakrishnanagar">
+Ramakrishnanagar
+</option>
+
+<option value="Kuvempunagar">
+Kuvempunagar
+</option>
+
+<option value="Saraswathipuram">
+Saraswathipuram
+</option>
+
+<option value="TJ Layout">
+TJ Layout
+</option>
+
+<option value="Hebbal">
+Hebbal
+</option>
+
+</select>
+
+</section>
+
+
+
+<!-- Trip Control -->
+
+<section class="management">
+
+<h2>
+
+<i class="fa-solid fa-location-dot"></i>
+
+Trip Control
+
+</h2>
+
+<label>
+
+Current Location
+
+</label>
+
+<br><br>
+
+<input
+
+type="text"
+
+id="location"
+
+placeholder="Enter Current Location">
+
+<br><br>
+
+<button onclick="startTrip()">
+
+▶ Start Trip
+
+</button>
+
+<button onclick="endTrip()">
+
+■ End Trip
+
+</button>
+
+<button onclick="updateLocation()">
+
+📍 Update Location
+
+</button>
+
+<button onclick="sendAlert()">
+
+🚨 Emergency Alert
+
+</button>
+
+</section>
+<!-- Live Map -->
+
+<section class="map">
+
+    <h2>
+        <i class="fa-solid fa-map-location-dot"></i>
+        Live Bus Location
+    </h2>
+
+    <iframe
+        src="https://maps.google.com/maps?q=Mysore&t=&z=12&ie=UTF8&iwloc=&output=embed"
+        allowfullscreen>
+    </iframe>
+
+</section>
+
+<!-- Notifications -->
+
+<section class="notifications">
+
+    <h2>
+        <i class="fa-solid fa-bell"></i>
+        Driver Notifications
+    </h2>
+
+    <ul id="driverNotifications">
+
+        <li>🚌 Select a route before starting the trip.</li>
+
+    </ul>
+
+</section>
+
+<!-- Footer -->
+
+<footer>
+
+    <p>© 2026 College Bus Tracker | Driver Portal</p>
+
+</footer>
+
+</div>
+
+<script>
+
+const driverData = {
+
+    "Ramakrishnanagar": {
+        driver: "Ramesh Kumar",
+        busNo: "KA09 AB1234"
+    },
+
+    "Kuvempunagar": {
+        driver: "Suresh",
+        busNo: "KA09 AB2345"
+    },
+
+    "Saraswathipuram": {
+        driver: "Mahesh",
+        busNo: "KA09 AB3456"
+    },
+
+    "TJ Layout": {
+        driver: "Ravi",
+        busNo: "KA09 AB4567"
+    },
+
+    "Hebbal": {
+        driver: "Prakash",
+        busNo: "KA09 AB5678"
+    }
+
+};
+
+// Change driver and bus details
+function changeBus() {
+
+    let route = document.getElementById("driverRoute").value;
+
+    document.getElementById("driverName").innerHTML =
+        driverData[route].driver;
+
+    document.getElementById("driverBus").innerHTML =
+        driverData[route].busNo;
+
+    document.getElementById("driverRouteText").innerHTML = route;
+
+}
+
+// Start Trip
+function startTrip() {
+
+    document.getElementById("tripStatus").innerHTML = "On Route";
+
+    alert("Trip Started");
+
+}
+
+// End Trip
+function endTrip() {
+
+    document.getElementById("tripStatus").innerHTML = "Completed";
+
+    alert("Trip Completed");
+
+}
+
+// Update Location
+async function updateLocation() {
+
+    let route = document.getElementById("driverRoute").value;
+
+    let location = document.getElementById("location").value;
+
+    if (location === "") {
+
+        alert("Please enter the current location.");
+
+        return;
+
+    }
+
+    let response = await fetch("http://localhost:3000/location", {
+
+        method: "PUT",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            route: route,
+            location: location,
+            status: "On Route"
+
+        })
+
+    });
+
+    let data = await response.json();
+
+    alert(data.message);
+
+    document.getElementById("location").value = "";
+
+}
+
+// Emergency Alert
+function sendAlert() {
+
+    alert("Emergency Alert Sent to Admin!");
+
+}
+
+// Load default route
+changeBus();
+
+</script>
+
+</body>
+</html>

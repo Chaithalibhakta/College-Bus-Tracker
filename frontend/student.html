@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - College Bus Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>
+            <i class="fa-solid fa-bus"></i>
+            Bus Tracker
+        </h2>
+
+        <ul>
+
+            <li><i class="fa-solid fa-house"></i> Dashboard</li>
+
+            <li><i class="fa-solid fa-location-dot"></i> Live Tracking</li>
+
+            <li><i class="fa-solid fa-bell"></i> Notifications</li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <!-- Header -->
+
+        <header>
+
+            <h1>Student Dashboard</h1>
+
+            <div class="profile">
+
+                <span>🎓 Student</span>
+
+                <button onclick="location.href='login.html'">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- Student Information -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h3>Student</h3>
+
+                <p>Chaithali Bhakta</p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-route"></i>
+
+                <h3>Route</h3>
+
+                <p id="selectedRoute">
+                    Ramakrishnanagar
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-bus"></i>
+
+                <h3>Bus Number</h3>
+
+                <p id="busNumber">
+                    KA09 AB1234
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <h3>ETA</h3>
+
+                <p id="eta">
+                    10 Minutes
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- Live Tracking -->
+
+        <section class="management">
+
+            <h2>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                Live Bus Tracking
+
+            </h2>
+
+            <label><strong>Select Route</strong></label>
+
+            <br><br>
+
+            <select id="studentRoute" onchange="loadTracking()">
+
+                <option value="Ramakrishnanagar">
+                    Ramakrishnanagar
+                </option>
+
+                <option value="Kuvempunagar">
+                    Kuvempunagar
+                </option>
+
+                <option value="Saraswathipuram">
+                    Saraswathipuram
+                </option>
+
+                <option value="TJ Layout">
+                    TK Layout
+                </option>
+
+                <option value="Hebbal">
+                    Hebbal
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <div id="studentTracking">
+
+                <p><strong>Bus :</strong> KA09 AB1234</p>
+
+                <p><strong>Route :</strong> Ramakrishnanagar</p>
+
+                <p><strong>Current Location :</strong> Ramakrishnanagar Circle</p>
+
+                <p><strong>Status :</strong> On Time</p>
+
+                <p><strong>ETA :</strong> 10 Minutes</p>
+
+            </div>
+
+        </section>
+        <!-- ================= MAP ================= -->
+
+<section class="map">
+
+    <h2>
+        <i class="fa-solid fa-map-location-dot"></i>
+        Live Bus Location
+    </h2>
+
+    <iframe
+        src="https://maps.google.com/maps?q=Mysore&t=&z=12&ie=UTF8&iwloc=&output=embed"
+        allowfullscreen>
+    </iframe>
+
+</section>
+
+<!-- ================= NOTIFICATIONS ================= -->
+
+<section class="notifications">
+
+    <h2>
+        <i class="fa-solid fa-bell"></i>
+        Latest Notifications
+    </h2>
+
+    <ul>
+
+        <li>🚌 Bus tracking is active.</li>
+
+        <li>📍 Select a route to view the current bus location.</li>
+
+        <li>⏰ ETA updates are fetched from the server.</li>
+
+    </ul>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 College Bus Tracker | Student Portal
+    </p>
+
+</footer>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+async function loadTracking() {
+
+    const route = document.getElementById("studentRoute").value;
+
+    document.getElementById("selectedRoute").innerHTML = route;
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:3000/location?route=${encodeURIComponent(route)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to fetch bus details");
+        }
+
+        const data = await response.json();
+
+        document.getElementById("busNumber").innerHTML = data.busNo;
+
+        document.getElementById("eta").innerHTML = data.eta;
+
+        document.getElementById("studentTracking").innerHTML = `
+
+            <p><strong>🚌 Bus Number:</strong> ${data.busNo}</p>
+
+            <p><strong>🛣 Route:</strong> ${data.route}</p>
+
+            <p><strong>📍 Current Location:</strong> ${data.location}</p>
+
+            <p><strong>⏰ ETA:</strong> ${data.eta}</p>
+
+            <p><strong>✅ Status:</strong> ${data.status}</p>
+
+        `;
+
+    } catch (error) {
+
+        document.getElementById("studentTracking").innerHTML = `
+            <p style="color:red;">
+                Unable to connect to the backend server.
+            </p>
+        `;
+
+        console.error(error);
+
+    }
+
+}
+
+// Load default route when page opens
+loadTracking();
+
+// Refresh every 5 seconds
+setInterval(loadTracking, 5000);
+
+</script>
+
+</body>
+</html>
